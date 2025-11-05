@@ -1,9 +1,9 @@
-import { db } from "../config/db";
+import { db } from "../config/db.js";
 
 export const createReader = async (req, res) => {
     try {
         const { body } = req;
-        const [results] = db.query(
+        const [results] = await db.query(
             'INSERT INTO reader(reader_name, email, reader_password) VALUES(?, ?, ?)', [body.reader_name, body.email, body.reader_password]
         );
         const [readerCreated] = await db.query(
@@ -18,7 +18,7 @@ export const createReader = async (req, res) => {
 
 export const listReader = async (req, res) => {
     try {
-        const [results] = db.query(
+        const [results] = await db.query(
             'SELECT * FROM reader'
         );
         res.status(200).json(results);
@@ -62,6 +62,6 @@ export const deleteReader = async (req, res) => {
         );
         res.status(200).send("Deleted reader!", results);
     } catch (error) {
-        console.log(error)
-    }
-}
+        console.log(error);
+    };
+};

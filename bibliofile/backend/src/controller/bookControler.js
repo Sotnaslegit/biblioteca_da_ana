@@ -1,4 +1,4 @@
-import { db } from "../config/db";
+import { db } from "../config/db.js";
 
 export const createBook = async (req, res) => {
     try {
@@ -18,7 +18,7 @@ export const createBook = async (req, res) => {
 
 export const listBook = async (req, res) => {
     try {
-        const [results] = db.query(
+        const [results] = await db.query(
             'SELECT * FROM book'
         );
         res.status(200).json(results)
@@ -30,7 +30,7 @@ export const listBook = async (req, res) => {
 export const listBookById = async (req, res) => {
     try {
         const { id } = req.params;
-        const [results] = db.query(
+        const [results] = await db.query(
             'SELECT * FROM book WHERE id_book = ?', id
         );
         res.status(200).json(results);
@@ -42,7 +42,7 @@ export const listBookById = async (req, res) => {
 export const deleteBook = async (req, res) => {
     try {
        const { id } = req.params;
-       const [results] = db.query(
+       const [results] = await db.query(
         'DELETE FROM book WHERE id = ?', id
        );
        res.status(200).send("Livro deletado!", results);

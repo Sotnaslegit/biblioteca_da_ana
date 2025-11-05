@@ -1,9 +1,9 @@
-import { db } from "../config/db";
+import { db } from "../config/db.js";
 
 export const createRecommend = async (req, res) => {
     try {
         const { body } = req;
-        const [results] = db.query(
+        const [results] = await db.query(
             'INSERT INTO recommend (reader_id, book_id) VALUES (?, ?)', [body.reader_id, body.book_id] 
         );
         res.status(201).json("Like adicionado!", results);
@@ -14,7 +14,7 @@ export const createRecommend = async (req, res) => {
 
 export const listRecommend = async (req, res) => {
     try {
-        const [results] = db.query(
+        const [results] = await db.query(
             'SELECT * FROM recommend'
         );
         res.status(200).json(results);
